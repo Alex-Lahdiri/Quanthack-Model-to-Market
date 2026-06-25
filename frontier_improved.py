@@ -35,6 +35,6 @@ ax.plot(G,[r[3]['max_drawdown']*100 for r in rows],"^--",label="stress (worst-ha
 ax.set_xlabel("target gross leverage"); ax.set_ylabel("%"); ax.grid(alpha=.3); ax.axhline(0,color="k",lw=.5)
 ax2=ax.twinx(); ax2.plot(G,[r[2] for r in rows],"d:",color="green",label="sim score (synthetic field)")
 ax2.set_ylabel("sim score",color="green")
-ax.set_title("Scoring frontier — improved slow-momentum book"); ax.legend(loc="lower left")
+ax.set_title("Scoring frontier - improved slow-momentum book"); ax.legend(loc="lower left")
 fig.tight_layout(); fig.savefig("results/research/scoring_frontier.png", dpi=120); plt.close(fig)
 print("\nsaved results/research/scoring_frontier.png")

@@ -3,7 +3,7 @@
 Today is Jun 16. The live feed + MT5 open Jun 19 (method selection) / Jun 21 (launch),
 so split the work into "now" and "Jun 19+".
 
-## A. NOW (Jun 16-18) — get it running locally + repo + Northflank shell
+## A. NOW (Jun 16-18) - get it running locally + repo + Northflank shell
 
 ### 1. Get the code
 The project is in `Desktop\Backtest\quanthack_backtester\` on your machine (also in the zip).
@@ -38,15 +38,15 @@ git init; git add .; git commit -m "Quanthack system"
 git remote add origin https://github.com/<you>/quanthack.git
 git branch -M main; git push -u origin main
 ```
-(`.gitignore` already excludes the big parquets / venv. No API keys are in the repo — keep it that way.)
+(`.gitignore` already excludes the big parquets / venv. No API keys are in the repo - keep it that way.)
 
 ### 5. Stand up the Northflank shell (don't schedule live yet)
 - New project **quanthack**, region **London (europe-west)**.
 - Connect your GitHub repo; build from `live/Dockerfile`.
 - Add env vars `ANTHROPIC_API_KEY`, `LOGFIRE_TOKEN`; add a persistent `/data` volume.
-- Create the two cron jobs from `live/northflank.json` but **leave them paused** — there's no live feed yet.
+- Create the two cron jobs from `live/northflank.json` but **leave them paused** - there's no live feed yet.
 
-## B. Jun 19 (method selection opens) — wire the live feed
+## B. Jun 19 (method selection opens) - wire the live feed
 
 ### 6. Pick the trading method: MT5 + custom (your plan).
 ### 7. Find how the platform exposes the live quote feed + your positions/equity.

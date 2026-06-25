@@ -1,5 +1,5 @@
 """
-Unified AI model router for the sponsor stack (advisory layer — never trades).
+Unified AI model router for the sponsor stack (advisory layer - never trades).
 
 Routes calls to Claude (Anthropic), NVIDIA Nemotron, and Doubleword. Preferred path
 is the **Pydantic AI Gateway** (one place for spend limits + Logfire tracing); if the
@@ -60,7 +60,7 @@ def chat(model: str, prompt: str, provider: str = "auto", system: str = "", max_
     """Return model text, or None if no backend is configured/available."""
     with _logfire_span("ai_gateway.chat", model=model, provider=provider):
         gw_url, gw_key = os.environ.get("PYDANTIC_GATEWAY_URL"), os.environ.get("PYDANTIC_GATEWAY_KEY")
-        # 1) Pydantic AI Gateway (preferred — ties Anthropic/Nemotron/Doubleword + Logfire together)
+        # 1) Pydantic AI Gateway (preferred - ties Anthropic/Nemotron/Doubleword + Logfire together)
         if gw_url and gw_key and provider in ("auto", "gateway"):
             out = _openai_call(gw_url, gw_key, model, prompt, system, max_tokens)
             if out is not None:

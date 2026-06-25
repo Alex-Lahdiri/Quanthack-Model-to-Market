@@ -1,4 +1,4 @@
-# Model to Market — Technology Submission
+# Model to Market - Technology Submission
 
 ## Summary
 A scoring-aware, market-neutral FX/metals trading system built end-to-end for the Quanthack
@@ -14,8 +14,8 @@ and Probability of Backtest Overfitting to separate real signal from luck.
   and caches a price panel. Checkpointed so it survives any runtime limit.
 - **Backtester** (`engine.py`): event-driven loop with mark-to-market, forced-liquidation detection,
   a no-trade band, and **per-instrument transaction costs** derived from the data's own spreads.
-- **Risk engine** (`risk_engine.py`): converts desired weights into compliant ones — closed-form
-  per-instrument concentration cap, net-directional cap, gross-leverage/margin cap — so the book never
+- **Risk engine** (`risk_engine.py`): converts desired weights into compliant ones - closed-form
+  per-instrument concentration cap, net-directional cap, gross-leverage/margin cap - so the book never
   touches a penalty tier or the wipeout red line. Discipline stayed 100/100 across the entire month.
 - **Strategies** (`strategies/`): cross-sectional momentum (inverse-vol) and a covariance-aware
   variant (shrinkage mean-variance, `Sigma^{-1} alpha`).
@@ -60,14 +60,14 @@ never inside a margin (90%) / leverage (28x) / concentration (90%) penalty tier.
 bridge is rate-limited well under 500 req/s and is paper-only with dry-run default.
 
 ## Sponsor technology
-- **Anthropic / Claude** — the entire research-and-engineering loop was driven agentically with Claude:
+- **Anthropic / Claude** - the entire research-and-engineering loop was driven agentically with Claude:
   data pipeline, backtester, strategy iteration, and (critically) the decision to *stop adding complexity*
   once the overfitting metrics said so. Optional Claude-powered ops agent for round summaries.
-- **Pydantic Logfire** — wired into the live runtime (`--logfire`) to trace every target-book generation
+- **Pydantic Logfire** - wired into the live runtime (`--logfire`) to trace every target-book generation
   and risk check; the audit trail doubles as our observability story.
-- **Northflank** — Dockerised deployment with two cron jobs (London region) for the hourly runner and
+- **Northflank** - Dockerised deployment with two cron jobs (London region) for the hourly runner and
   5-minute risk monitor.
-- **Doubleword / NVIDIA Nemotron** — evaluated for an LLM/event signal and a microstructure model; our
+- **Doubleword / NVIDIA Nemotron** - evaluated for an LLM/event signal and a microstructure model; our
   own overfitting analysis argued against adding ML on a single month of data, so we deliberately did not.
   (Honest negative usage is itself a finding.)
 

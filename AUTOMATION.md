@@ -10,19 +10,19 @@ is logged, and it's **dry-run until you flip one switch**.
 2. `live_runner.py` → writes `book.json` at the gross from `runtime.json`, with `--dd-guard`, the `--risk-gate`, and Logfire tracing.
 3. `mt5_bridge.py` → trades the delta vs your current positions (dry-run, or live if you enabled it).
 
-Logs land in `live\logs\cycle_YYYYMMDD.log` — open it any time to see exactly what happened.
+Logs land in `live\logs\cycle_YYYYMMDD.log` - open it any time to see exactly what happened.
 
 ## The one config file: `live\runtime.json`
 ```json
 { "gross": 2.0, "strategy": "mv", "live": false }
 ```
-- **gross** — change this per round (use `gross_planner.py` to decide). No need to touch Task Scheduler.
-- **live** — `false` = dry-run (plans orders, sends nothing). `true` = actually execute on the paper account.
+- **gross** - change this per round (use `gross_planner.py` to decide). No need to touch Task Scheduler.
+- **live** - `false` = dry-run (plans orders, sends nothing). `true` = actually execute on the paper account.
 
 ## Prerequisites (must be true while it runs)
 - **MT5 terminal open and logged in** to account 10009 (the scripts attach to it).
 - **Env vars set permanently:** `setx NVIDIA_API_KEY "nvapi-..."` and `setx NEMOTRON_MODEL "nvidia/nemotron-mini-4b-instruct"`.
-- **Laptop on and not asleep.** Task Scheduler + MT5 only run while Windows is awake — so plug in and disable sleep:
+- **Laptop on and not asleep.** Task Scheduler + MT5 only run while Windows is awake - so plug in and disable sleep:
   `powercfg /change standby-timeout-ac 0` (or Settings → Power → Screen & sleep → "Never" on power).
   If the laptop sleeps or shuts, trading pauses until it's back; the loop just resumes next hour.
 
@@ -40,7 +40,7 @@ Logs land in `live\logs\cycle_YYYYMMDD.log` — open it any time to see exactly 
    Open **Task Scheduler** (Start → search it) and confirm **QuanthackCycle** is listed. Right-click → **Run** to fire it once and re-check the log.
 
 ## Go-live (Sunday 22:00)
-Edit `live\runtime.json` and set `"live": true`. That's the only change — the task is already running hourly, and now it executes instead of dry-running. To set the round's gross, also set `"gross"` to whatever `gross_planner.py` recommends (start at **2**).
+Edit `live\runtime.json` and set `"live": true`. That's the only change - the task is already running hourly, and now it executes instead of dry-running. To set the round's gross, also set `"gross"` to whatever `gross_planner.py` recommends (start at **2**).
 
 ## Each round
 1. Run `python live\gross_planner.py --round N --rounds-total 4 --standing <safe|middle|at-risk>`.

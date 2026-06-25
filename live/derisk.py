@@ -1,9 +1,9 @@
 """
-Deterministic drawdown DE-RISK ladder (survival control — not alpha).
+Deterministic drawdown DE-RISK ladder (survival control - not alpha).
 
 As intra-round drawdown from the equity peak deepens, scale gross exposure down.
 This protects the competition's Drawdown rank (15%), smooths the equity curve (Sharpe),
-and — most importantly in a knockout — keeps you alive (away from forced liquidation)
+and - most importantly in a knockout - keeps you alive (away from forced liquidation)
 while over-levered competitors eliminate themselves. Peak is tracked in a small state
 file so it persists across runner invocations within a round (reset the file each round).
 """

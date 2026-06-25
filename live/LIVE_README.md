@@ -1,4 +1,4 @@
-# Live deployment (advisory) — Quanthack
+# Live deployment (advisory) - Quanthack
 
 **Safety first.** `live_runner.py` computes a target book; `risk_monitor.py` watches risk. Neither
 sends orders. Execution is `mt5_bridge.py`, which is **dry-run by default** and refuses to send
@@ -11,7 +11,7 @@ if the account looks real (trade_mode 0). Keep yourself in the loop. Never wire 
 - Broker does **not** offer NZDUSD / EURJPY. Crypto (BTC/ETH/SOL/XRP/BAR) is live but **unvalidated** → excluded.
 - Contract sizes: FX = 100,000; **XAUUSD = 100 oz**; **XAGUSD = 5,000 oz**. Min lot 0.01, step 0.01.
 
-## Architecture (MT5-native — one terminal, three scripts)
+## Architecture (MT5-native - one terminal, three scripts)
 ```
 MT5 terminal (open + logged in to 10009)
    -> mt5_feed.py     (every 1 min)   panel_live.parquet   (10 names, ~5 days of 1-min closes)
@@ -39,7 +39,7 @@ drawdown de-risk ladder; `--risk-gate --headlines headlines.txt` adds the news m
 
 ## 3. Execute on the paper account (dry-run first!)
 ```
-# DRY RUN — prints planned orders in lots, sends nothing:
+# DRY RUN - prints planned orders in lots, sends nothing:
 python live/mt5_bridge.py --book book.json
 # When the plan looks right, actually send on the contest account:
 python live/mt5_bridge.py --book book.json --live --i-confirm-paper
@@ -57,7 +57,7 @@ python live/risk_monitor.py --status status.json --logfire
 Flags proximity to the margin (90%), leverage (28x), and concentration (90%) penalty tiers and the
 liquidation red line.
 
-## 5. Deploy on Northflank (optional — only if you want it running unattended)
+## 5. Deploy on Northflank (optional - only if you want it running unattended)
 - Region **London** (latency). Cron jobs (see `northflank.json`): feed `* * * * *`, runner `0 * * * *`,
   monitor `*/5 * * * *`. Persistent volume for the panel/book/status.
 - **Note:** MetaTrader5's Python package is Windows-only, so the *bridge/feed* run on your Windows box.
@@ -65,7 +65,7 @@ liquidation red line.
   simplest to run all three on the Windows machine with Task Scheduler.
 
 ## 6. Logfire (optional, sponsor)
-`pip install logfire`, set `LOGFIRE_TOKEN`, pass `--logfire`. Traces every run + risk alert — useful
+`pip install logfire`, set `LOGFIRE_TOKEN`, pass `--logfire`. Traces every run + risk alert - useful
 for the tech-prize demo.
 
 ## Go-live sequence (Jun 21, 22:00)

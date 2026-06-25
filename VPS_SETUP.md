@@ -1,24 +1,24 @@
-# Quanthack on a VPS — 24/7, never sleeps, survives travel
+# Quanthack on a VPS - 24/7, never sleeps, survives travel
 
 **Why:** last night's outage was your laptop *sleeping*. A Windows VPS runs MT5 + your cycle
-around the clock, stays connected, and is independent of your laptop — it would have prevented
+around the clock, stays connected, and is independent of your laptop - it would have prevented
 that entirely. This is what makes the finals bulletproof (and it ignores your drive to Bristol).
 
 ## 1. Get a Windows VPS
-- You need a **full Windows VPS with RDP** (Remote Desktop) — *not* a broker "MT5 VPS" (those
+- You need a **full Windows VPS with RDP** (Remote Desktop) - *not* a broker "MT5 VPS" (those
   only host EAs, not Python).
 - Spec: **2 vCPU, 4 GB RAM, Windows Server 2022**, ~$10–30/mo (hourly/trial options exist).
-- Pick a region with **low latency to the broker** (server `3.11.134.149`) — a UK/EU datacenter.
+- Pick a region with **low latency to the broker** (server `3.11.134.149`) - a UK/EU datacenter.
 - Any mainstream cloud Windows VPS works (search "Windows VPS RDP hourly").
 
 ## 2. Log in (RDP)
-- Connect with Remote Desktop using the VPS IP + credentials. Set a **strong password** — your
+- Connect with Remote Desktop using the VPS IP + credentials. Set a **strong password** - your
   contest account will live here.
 
 ## 3. Install essentials
 - **MetaTrader 5**: install, log into the contest account (login `10009`, server
   `3.11.134.149:443`). Confirm "connected" + balance.
-- **Python 3.12+**: from python.org — **tick "Add Python to PATH"**.
+- **Python 3.12+**: from python.org - **tick "Add Python to PATH"**.
 
 ## 4. Copy the project over
 - Zip `quanthack_backtester` on your laptop → transfer via RDP copy-paste (or OneDrive in the
@@ -49,7 +49,7 @@ $env:QH_DRY=1; powershell -ExecutionPolicy Bypass -File live\run_cycle.ps1   # p
 - For the `rev` strategy, re-register the cycle faster: `live\register_task.ps1 -IntervalMinutes 15`.
 
 ## 8. Disconnect freely
-**Closing the RDP window does NOT stop the VPS** — it runs 24/7. Reconnect anytime to check.
+**Closing the RDP window does NOT stop the VPS** - it runs 24/7. Reconnect anytime to check.
 
 ## Daily check (30 sec)
 - RDP in → MT5 connected + Algo green → skim `live\logs\cycle_*.log`.

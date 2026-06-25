@@ -41,7 +41,7 @@ def gather_state():
         b = json.load(open(bp)); tgt = b.get("targets", {})
         pos = [{"symbol": s, "side": "long" if t.get("notional", 0) > 0 else "short", "notional": t.get("notional")} for s, t in tgt.items()]
         return {"source": "book.json (last cycle)", "equity": b.get("equity"), "gross_leverage": b.get("gross_leverage"), "positions": pos}
-    return {"source": "none", "positions": [], "note": "no live MT5 and no book.json — run a cycle first"}
+    return {"source": "none", "positions": [], "note": "no live MT5 and no book.json - run a cycle first"}
 
 def context_str(st):
     pos = st.get("positions", [])

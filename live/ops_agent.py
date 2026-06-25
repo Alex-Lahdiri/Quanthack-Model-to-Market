@@ -1,5 +1,5 @@
 """
-AI ops/risk briefing agent (advisory — never trades).
+AI ops/risk briefing agent (advisory - never trades).
 
 Reads current account status + the risk-engine assessment (+ optional leaderboard)
 and produces a plain-English briefing with recommended actions. Uses Claude
@@ -25,14 +25,14 @@ def headroom(rep):
 
 
 def deterministic_brief(status, rep, hr, equity_change_pct):
-    action = "HOLD — book is well within all limits."
+    action = "HOLD - book is well within all limits."
     flags = []
     if rep["warnings"]:
-        action = "REDUCE GROSS now — a penalty tier is breached."; flags = rep["warnings"]
+        action = "REDUCE GROSS now - a penalty tier is breached."; flags = rep["warnings"]
     elif hr["margin_headroom_to_penalty"] < 0.05 or hr["leverage_headroom_to_penalty"] < 1.5:
-        action = "TRIM exposure — approaching a penalty tier."
+        action = "TRIM exposure - approaching a penalty tier."
     elif equity_change_pct is not None and equity_change_pct < -4:
-        action = "CONSIDER de-risking — drawdown building this round."
+        action = "CONSIDER de-risking - drawdown building this round."
     lines = [
         "QUANTHACK OPS BRIEFING",
         f"  equity {status['equity']:,.0f}" + (f"  ({equity_change_pct:+.2f}% since round start)" if equity_change_pct is not None else ""),

@@ -5,7 +5,7 @@ Reads recent headlines (one per line) and, via NVIDIA Nemotron (cheap bulk impac
 tagging) + Claude (synthesis) through the Pydantic gateway, returns a gross-exposure
 multiplier in [0.3, 1.0]. It can ONLY cut exposure ahead of high-impact events; it can
 never increase it and never overrides the deterministic risk engine. With no AI
-configured it returns 1.0 (no change) — so the system is safe by default.
+configured it returns 1.0 (no change) - so the system is safe by default.
 
   python news_risk_gate.py --headlines headlines.txt
 """

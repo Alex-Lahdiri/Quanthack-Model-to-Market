@@ -1,5 +1,5 @@
 """
-Cloud 'mission control' web service (for Northflank) — serves the live dashboard and the
+Cloud 'mission control' web service (for Northflank) - serves the live dashboard and the
 AI trading-desk decision over HTTP. Advisory only; the MT5 feed + bridge stay on the
 Windows box. Stdlib only (no web framework) for a tiny, robust container.
 

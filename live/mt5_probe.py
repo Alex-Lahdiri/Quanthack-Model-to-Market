@@ -1,12 +1,12 @@
 """
-MT5 PROBE — run on your Windows host after the MT5 terminal is installed + logged in.
+MT5 PROBE - run on your Windows host after the MT5 terminal is installed + logged in.
 
 It connects to the competition account, dumps the full tradable symbol list + contract
 specs to `mt5_symbols.json`, matches our 12-name universe to the broker's exact symbol
 names, and confirms the live data feed works. Send the JSON to Claude (it has NO secrets)
 to finalize SYMBOL_MAP, lot conversion, and the feed.
 
-Credentials come from ENV VARS — never hardcode/share them:
+Credentials come from ENV VARS - never hardcode/share them:
   set MT5_LOGIN=10009  &  set MT5_PASSWORD=...  &  set MT5_SERVER=3.11.134.149:443
 """
 from __future__ import annotations

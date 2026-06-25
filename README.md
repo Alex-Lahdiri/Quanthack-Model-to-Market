@@ -1,35 +1,35 @@
-# Model to Market — an AI-native, self-adapting quant trading system
+# Model to Market - an AI-native, self-adapting quant trading system
 
-> A complete quant stack — research → strategy → a multi-layer risk engine → native MetaTrader 5 execution → an **autonomous multi-agent AI desk** (NVIDIA Nemotron + Anthropic Claude, Pydantic-validated, Logfire-traced, multi-provider via Doubleword) → cloud deploy (Northflank) — that, **live during the competition, tested its own edges, overturned its own thesis on the data, and re-tuned its strategy, leverage, and risk autonomously.**
+> A complete quant stack - research → strategy → a multi-layer risk engine → native MetaTrader 5 execution → an **autonomous multi-agent AI desk** (NVIDIA Nemotron + Anthropic Claude, Pydantic-validated, Logfire-traced, multi-provider via Doubleword) → cloud deploy (Northflank) - that, **live during the competition, tested its own edges, overturned its own thesis on the data, and re-tuned its strategy, leverage, and risk autonomously.**
 
 Built for the Syphonix × AI Engine **"Model to Market"** competition.
 $1,000,000 simulated · scored **70% Return / 15% Drawdown / 10% Sharpe / 5% Risk Discipline**.
 
-**Honest thesis:** we make no claim to a magic alpha — the edge is thin and regime-dependent, and we *prove* that with data rather than hide it. We compete on **engineering, genuine end-to-end sponsor integration, live adaptability, and risk discipline.**
+**Honest thesis:** we make no claim to a magic alpha - the edge is thin and regime-dependent, and we *prove* that with data rather than hide it. We compete on **engineering, genuine end-to-end sponsor integration, live adaptability, and risk discipline.**
 
 ---
 
-## ✨ What makes this different
+## What makes this different
 
-1. **Autopilot — an autonomous, *governed* AI desk.** Each cycle, **NVIDIA Nemotron** (Analyst) classifies the live regime and **Anthropic Claude** (Strategist) proposes the next strategy / gross / cadence — every proposal a **Pydantic-validated** object — then a deterministic **Governor** clamps it to competition-safe limits. It *provably* cannot size up in a no-edge regime, caps an unproven edge, and obeys the drawdown ladder (a reckless `gross=9` proposal is clamped to 3.0; a 2.5 ask in a no-edge regime is forced to 1.0). **AI proposes, a deterministic governor disposes, Logfire traces all of it.** → [`live/autopilot.py`](live/autopilot.py)
-2. **We let the data overturn our own thesis.** A live information-coefficient + autocorrelation study showed momentum was the *wrong sign* in this regime — hourly returns persistently **mean-revert** (lag-1 autocorr ≈ −0.2). We retired our backtest champion and built a mean-reversion strategy in response. → [`live/edge_scan.py`](live/edge_scan.py), [`live/micro_scan.py`](live/micro_scan.py)
-3. **We tested the scalper meta honestly — at zero risk.** A dry probe paper-traded on **live ticks** and reported P&L *net of the real spread*: it ruled out FX scalping (spread > move) and found BTC marginal-but-fat-tailed — so we **declined to deploy it**. Discipline over FOMO. → [`live/scalp.py`](live/scalp.py)
-4. **Layered, provable risk.** Risk-engine caps + a drawdown ladder + a novel **profit-lock ratchet** + a 3-minute circuit breaker + preflight halts — every AI overlay is strictly *reduce-only* — and the caps + governor are **proven by a runnable test suite** ([`tests/test_safety.py`](tests/test_safety.py), 6/6 passing). → [`risk_engine.py`](risk_engine.py), [`live/profit_lock.py`](live/profit_lock.py), [`live/fast_monitor.py`](live/fast_monitor.py)
+1. **Autopilot - an autonomous, *governed* AI desk.** Each cycle, **NVIDIA Nemotron** (Analyst) classifies the live regime and **Anthropic Claude** (Strategist) proposes the next strategy / gross / cadence - every proposal a **Pydantic-validated** object - then a deterministic **Governor** clamps it to competition-safe limits. It *provably* cannot size up in a no-edge regime, caps an unproven edge, and obeys the drawdown ladder (a reckless `gross=9` proposal is clamped to 3.0; a 2.5 ask in a no-edge regime is forced to 1.0). **AI proposes, a deterministic governor disposes, Logfire traces all of it.** → [`live/autopilot.py`](live/autopilot.py)
+2. **We let the data overturn our own thesis.** A live information-coefficient + autocorrelation study showed momentum was the *wrong sign* in this regime - hourly returns persistently **mean-revert** (lag-1 autocorr ≈ −0.2). We retired our backtest champion and built a mean-reversion strategy in response. → [`live/edge_scan.py`](live/edge_scan.py), [`live/micro_scan.py`](live/micro_scan.py)
+3. **We tested the scalper meta honestly - at zero risk.** A dry probe paper-traded on **live ticks** and reported P&L *net of the real spread*: it ruled out FX scalping (spread > move) and found BTC marginal-but-fat-tailed - so we **declined to deploy it**. Discipline over FOMO. → [`live/scalp.py`](live/scalp.py)
+4. **Layered, provable risk.** Risk-engine caps + a drawdown ladder + a novel **profit-lock ratchet** + a 3-minute circuit breaker + preflight halts - every AI overlay is strictly *reduce-only* - and the caps + governor are **proven by a runnable test suite** ([`tests/test_safety.py`](tests/test_safety.py), 6/6 passing). → [`risk_engine.py`](risk_engine.py), [`live/profit_lock.py`](live/profit_lock.py), [`live/fast_monitor.py`](live/fast_monitor.py)
 5. **Every sponsor is used for something real**, in the live system (details below).
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```mermaid
 flowchart TD
-  MT5["MT5 terminal — live quotes"] -->|copy_rates / ticks| FEED["mt5_feed.py — rolling 1-min panel"]
-  FEED --> RUN["live_runner.py — target book (iv / mv / rev, market-neutral)"]
-  RUN --> RISK["RISK ENGINE — per-name / sector / net-dir / gross caps"]
-  RISK --> DESK["AUTOPILOT / AI DESK — Nemotron Analyst + Claude Strategist → deterministic Governor"]
-  DESK --> PRE["PREFLIGHT — halt if feed stale or book insane"]
-  PRE --> BR["mt5_bridge.py — paper orders (delta vs positions)"]
-  FM["fast_monitor.py every 3 min — drawdown ladder + profit-lock"] -.->|reduce-only| BR
+  MT5["MT5 terminal - live quotes"] -->|copy_rates / ticks| FEED["mt5_feed.py - rolling 1-min panel"]
+  FEED --> RUN["live_runner.py - target book (iv / mv / rev, market-neutral)"]
+  RUN --> RISK["RISK ENGINE - per-name / sector / net-dir / gross caps"]
+  RISK --> DESK["AUTOPILOT / AI DESK - Nemotron Analyst + Claude Strategist → deterministic Governor"]
+  DESK --> PRE["PREFLIGHT - halt if feed stale or book insane"]
+  PRE --> BR["mt5_bridge.py - paper orders (delta vs positions)"]
+  FM["fast_monitor.py every 3 min - drawdown ladder + profit-lock"] -.->|reduce-only| BR
 ```
 
 <sub>Text version:</sub>
@@ -60,7 +60,7 @@ flowchart TD
 
 ---
 
-## 🤝 Partner technology — what we used and where
+## Partner technology - what we used and where
 
 | Sponsor | Used for | Where |
 |---|---|---|
@@ -73,39 +73,39 @@ flowchart TD
 
 ---
 
-## 🔬 Research & rigor — honesty as a feature
+## Research & rigor - honesty as a feature
 
-- **IC surface** across a full lookback×horizon grid, with **t-stat significance** and an **autocorrelation study**, run *live on the competition feed* — not just the archive. → `live/edge_scan.py`, `live/micro_scan.py`
-- **Sub-period consistency** scoring (`live/strat_compare.py`) — we choose what *generalises*, not what fits the recent window (the direct antidote to overfitting).
+- **IC surface** across a full lookback×horizon grid, with **t-stat significance** and an **autocorrelation study**, run *live on the competition feed* - not just the archive. → `live/edge_scan.py`, `live/micro_scan.py`
+- **Sub-period consistency** scoring (`live/strat_compare.py`) - we choose what *generalises*, not what fits the recent window (the direct antidote to overfitting).
 - **Overfitting controls:** Deflated Sharpe ≈ 0.26, Probability of Backtest Overfitting ≈ 21% (Bailey & López de Prado) → *trust the direction of findings, not the magnitude.*
-- **Real venue cost calibration** — and we *discovered live* that true spreads (2–6 bps off-hours) dwarf the M1-derived estimate, which reshaped our cadence toward low turnover.
+- **Real venue cost calibration** - and we *discovered live* that true spreads (2–6 bps off-hours) dwarf the M1-derived estimate, which reshaped our cadence toward low turnover.
 - **Negative results we kept and published:** momentum (wrong sign live), a reversal sleeve that died to cost, HRP, an ensemble, an order-book/microstructure dead-end, crypto (failed a live validation gate), and FX/BTC scalping (probed at zero risk, declined).
-- **Full dated research journey** — every experiment, every negative result, the overfit math, the shrinkage-MV win: **[`RESEARCH_LOG.md`](RESEARCH_LOG.md)**.
+- **Full dated research journey** - every experiment, every negative result, the overfit math, the shrinkage-MV win: **[`RESEARCH_LOG.md`](RESEARCH_LOG.md)**.
 
 ---
 
-## 🔄 The standout: live, data-driven self-adaptation
+## The standout: live, data-driven self-adaptation
 
 The competition opened choppy and momentum-adverse. The system **measured and adapted on live data** rather than hoping:
 - Diagnosed a near-zero/negative momentum edge live; **slowed cadence** to cut whipsaw and **cut gross** when the edge was absent.
 - **Overturned its own momentum thesis** for mean-reversion when the autocorrelation demanded it (`rev` strategy).
-- **Autopilot** closes the loop autonomously — and the **governor** guarantees the AI can only ever *reduce* risk or stay within safe bounds.
+- **Autopilot** closes the loop autonomously - and the **governor** guarantees the AI can only ever *reduce* risk or stay within safe bounds.
 - The AI desk surfaced a real concentration risk (co-dominant metals shorts), which we then fixed in code with a **metals-sector cap**.
 
 Full write-up, demo script, and sponsor detail: **[`TECH_PRIZE_SUBMISSION.md`](TECH_PRIZE_SUBMISSION.md)**.
 
 ---
 
-## 🛡️ Risk & safety engineering
+## Risk & safety engineering
 
 - Per-name ≤30% of gross · per-name ≤75% of equity · **metals-sector cap** ≤35% · net-directional & gross/margin ceilings under every penalty tier.
 - **Drawdown ladder** (5/8/12% → ×0.7/0.4/0.2) shared by the cycle and the 3-min monitor.
-- **Profit-lock ratchet** — once up ≥0.5%, de-risks as gains are surrendered (give back 25/50/75% → ×0.7/0.4/0.2): locks profit *without* a stop's whipsaw.
+- **Profit-lock ratchet** - once up ≥0.5%, de-risks as gains are surrendered (give back 25/50/75% → ×0.7/0.4/0.2): locks profit *without* a stop's whipsaw.
 - **Preflight** halts a cycle on a stale feed or insane book. **Paper-only** throughout; every AI overlay is reduce-only and can never override the deterministic risk engine.
 
 ---
 
-## ▶️ Run it (demo)
+## Run it (demo)
 
 ```powershell
 # one control panel does everything
@@ -121,7 +121,7 @@ Everything is **dry-run by default** and requires explicit confirmation to send 
 
 ---
 
-## 🗺️ Repo map
+## Repo map
 
 | Area | Files |
 |---|---|
@@ -131,11 +131,12 @@ Everything is **dry-run by default** and requires explicit confirmation to send 
 | **Autopilot / AI** | `live/autopilot.py`, `live/ask.py` (NL "ask the desk"), `live/eval_autopilot.py` (Pydantic decision-evals), `live/nemotron_benchmark.py` (NIM vs Doubleword self-host), `live/ai_gateway.py`, `live/desk.py`, `live/desk_pydantic_ai.py`, `live/news_risk_gate.py` |
 | Live research | `live/edge_scan.py`, `live/micro_scan.py`, `live/strat_compare.py`, `live/crypto_scan.py`, `live/scalp.py`, `live/regime_report.py` |
 | Cloud / ops | `live/server.py`, `live/Dockerfile`, `live/northflank.json`, `live/run_cycle.ps1`, `setup_vps.ps1` |
-| Tests | `tests/test_safety.py` — runnable proofs of the governor / profit-lock / risk caps |
+| Tests | `tests/test_safety.py` - runnable proofs of the governor / profit-lock / risk caps |
 | Docs | `TECH_PRIZE_SUBMISSION.md`, `NVIDIA.md`, `DEMO.md`, `RESEARCH_LOG.md`, `FINALS_PLAYBOOK.md`, `VPS_SETUP.md` |
 
 ---
 
-## ⚖️ Honest assessment
+## Honest assessment
 
-No large or certain alpha — the edge is thin and regime-dependent, and we say so. The most competition-relevant thing we built wasn't a magic signal; it was a **system that measures the live market, tests its own ideas, kills the ones that don't survive contact with the data, and re-tunes itself — observably and safely.** That is the AI-native thesis, made real.
+No large or certain alpha - the edge is thin and regime-dependent, and we say so. The most competition-relevant thing we built wasn't a magic signal; it was a **system that measures the live market, tests its own ideas, kills the ones that don't survive contact with the data, and re-tunes itself - observably and safely.** That is the AI-native thesis, made real.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      

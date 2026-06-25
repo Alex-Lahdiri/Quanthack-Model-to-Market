@@ -1,8 +1,8 @@
-# Cloud deployment — Northflank "mission control"
+# Cloud deployment - Northflank "mission control"
 
 A live, public cloud service that serves your **dashboard** and runs the **AI trading desk**
 (Nemotron + Claude, traced in Logfire). It's the impressive, demonstrable cloud piece for the
-judges — without pretending the cloud can do what only the Windows box can.
+judges - without pretending the cloud can do what only the Windows box can.
 
 ## Architecture (honest split)
 
@@ -11,7 +11,7 @@ judges — without pretending the cloud can do what only the Windows box can.
   ----------------                          -----------------------------
   MT5 terminal (login 10009)                mission-control web service
   mt5_feed.py    -> panel_live.parquet      GET /          -> live dashboard.html
-  live_runner.py -> book.json   ───────────▶ GET /api/desk  -> runs desk.py on book.json
+  live_runner.py -> book.json   ───────────GET /api/desk  -> runs desk.py on book.json
   desk.py + mt5_bridge.py (execution)       GET /health     -> health check
                                             cron: desk-review every 15 min -> Logfire
 ```
@@ -50,6 +50,6 @@ PORT=8080 python live/server.py
 ```
 
 ## Notes
-- The container deliberately omits MetaTrader5 (Windows-only) — it never trades; it's advisory.
+- The container deliberately omits MetaTrader5 (Windows-only) - it never trades; it's advisory.
 - For full Nemotron + Claude + Logfire output, set the three secrets; without them the desk
   still runs on deterministic fallbacks.

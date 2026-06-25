@@ -1,5 +1,5 @@
 """
-v2 strategy — built directly from the alpha-research findings:
+v2 strategy - built directly from the alpha-research findings:
 
   * Multi-horizon momentum (blend ~2h and ~8h lookbacks): the IC map showed the
     edge lives in hours-of-lookback predicting hours-forward, not minutes.
@@ -24,7 +24,7 @@ from .base import Strategy
 
 def _tod_multipliers() -> dict[int, float]:
     m = {h: 0.5 for h in range(24)}
-    for h in (11, 12, 13, 14, 15, 16):   # London/NY overlap — most vol & edge
+    for h in (11, 12, 13, 14, 15, 16):   # London/NY overlap - most vol & edge
         m[h] = 1.0
     for h in (7, 8, 9, 10, 17, 18, 19):  # active but secondary
         m[h] = 0.7

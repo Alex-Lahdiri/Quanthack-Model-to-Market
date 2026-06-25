@@ -1,5 +1,5 @@
 """
-Scoring metrics — aligned to the OFFICIAL competition rules.
+Scoring metrics - aligned to the OFFICIAL competition rules.
 
 Final Score = 70% Return Rank + 15% Drawdown Rank + 10% Sharpe Rank + 5% Risk Discipline.
 Rank_i = 100 * (N - Rank_i) / (N - 1), Rank=1 best (so best->100, worst->0).
