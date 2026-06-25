@@ -1,0 +1,28 @@
+{
+  "metrics": {
+    "total_return": 0.3056341950914305,
+    "max_drawdown": -0.13575366885829732,
+    "sharpe": 10.427175977048792,
+    "sortino": 16.43846951671377,
+    "discipline": 100.0,
+    "trade_count": 7673,
+    "liquidated": false,
+    "final_equity": 1305634.1950914306,
+    "n_equity_samples": 672,
+    "sharpe_prize_eligible": true
+  },
+  "score": {
+    "rank_return": 92.66666666666667,
+    "rank_drawdown": 20.0,
+    "rank_sharpe": 100.0,
+    "rank_discipline": 95.66666666666667,
+    "final_score": 82.64999999999999
+  },
+  "params": {
+    "strategy": "diversified_vol_target",
+    "rebalance_every": 15,
+    "cost_bps": 1.0,
+    "band_frac": 0.02,
+    "start_equity": 1000000.0
+  }
+}

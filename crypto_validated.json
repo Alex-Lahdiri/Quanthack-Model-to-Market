@@ -1,0 +1,26 @@
+{
+  "ok": false,
+  "reason": "FAILS gate: Sharpe dropped >20% vs FX-only",
+  "crypto": [
+    "BTCUSD",
+    "ETHUSD",
+    "SOLUSD",
+    "XRPUSD",
+    "BARUSD"
+  ],
+  "bars": 10358,
+  "fx": {
+    "total_return": -0.021266914230096856,
+    "sharpe": -0.021804171041068316,
+    "max_drawdown": -0.051840767515690334,
+    "discipline": 100.0,
+    "liquidated": false
+  },
+  "combined": {
+    "total_return": -0.10416267122604128,
+    "sharpe": -0.1273063934303894,
+    "max_drawdown": -0.10747344145952831,
+    "discipline": 100.0,
+    "liquidated": false
+  }
+}

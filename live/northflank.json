@@ -1,0 +1,32 @@
+{
+  "_comment": "Illustrative Northflank spec. Region London (eu-west). The MT5 feed + bridge run on the Windows box; this cloud deployment is advisory MISSION CONTROL -- it serves the live dashboard and runs the AI desk (Nemotron + Claude) with Logfire tracing. Set NVIDIA_API_KEY / ANTHROPIC_API_KEY / LOGFIRE_TOKEN as Northflank secrets. Build from live/Dockerfile with the repo root as context.",
+  "project": "quanthack",
+  "region": "europe-west",
+  "services": [
+    {
+      "name": "mission-control",
+      "type": "web",
+      "build": { "type": "dockerfile", "dockerfile": "live/Dockerfile", "context": "." },
+      "command": "python live/server.py",
+      "port": 8080,
+      "public": true,
+      "healthCheck": "/health",
+      "resources": { "cpu": "0.5 vCPU", "memory": "512Mi" },
+      "env": {
+        "NEMOTRON_MODEL": "nvidia/nemotron-mini-4b-instruct",
+        "NVIDIA_API_KEY": "${NVIDIA_API_KEY}",
+        "ANTHROPIC_API_KEY": "${ANTHROPIC_API_KEY}",
+        "LOGFIRE_TOKEN": "${LOGFIRE_TOKEN}"
+      }
+    }
+  ],
+  "cronJobs": [
+    {
+      "name": "desk-review",
+      "schedule": "*/15 * * * *",
+      "command": "python live/desk.py --book /data/book.json --headlines live/headlines.txt --peak-state /data/peak.json --emit /data/desk_decision.json --logfire",
+      "env": { "NVIDIA_API_KEY": "${NVIDIA_API_KEY}", "ANTHROPIC_API_KEY": "${ANTHROPIC_API_KEY}", "LOGFIRE_TOKEN": "${LOGFIRE_TOKEN}" },
+      "volumes": [{ "mount": "/data", "persistent": true }]
+    }
+  ]
+}

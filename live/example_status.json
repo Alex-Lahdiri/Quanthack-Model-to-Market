@@ -1,0 +1,7 @@
+{
+  "equity": 1000000,
+  "round_start_equity": 1000000,
+  "positions": {"EURUSD": 247979, "GBPUSD": 195362, "USDJPY": 340753, "USDCHF": 431742,
+    "USDCAD": 378192, "AUDUSD": 156915, "NZDUSD": 73412, "EURJPY": 268895,
+    "EURGBP": 373098, "EURCHF": 359292, "XAUUSD": -520256, "XAGUSD": -654105}
+}

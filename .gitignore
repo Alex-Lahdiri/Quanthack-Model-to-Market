@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Data — large, regenerated, or competition-provided (judges don't need it)
+*.parquet
+data/
+results/*.csv
+
+# Logs
+*.log
+live/logs/
+
+# Transient runtime state (regenerated every cycle)
+book.json
+peak.json
+profit_peak.json
+desk_decision.json
+autopilot_decision.json
+
+# Secrets — NEVER commit (the codebase already uses env vars; this is belt-and-suspenders)
+.env
+*.env
+*.key
+*secret*
+*credential*
+mt5_symbols.json

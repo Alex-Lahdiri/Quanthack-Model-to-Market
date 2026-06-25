@@ -1,0 +1,10 @@
+pandas>=2.0
+numpy>=1.26
+pyarrow>=14.0
+scipy>=1.11
+scikit-learn>=1.3
+# --- sponsor AI layer (advisory only; never trades) ---
+openai>=1.30        # OpenAI-compatible client for NVIDIA Nemotron + Pydantic gateway
+pydantic>=2.6       # structured/validated model outputs
+# optional: logfire   (experiment tracking / alerting + sponsor traces)
+# optional: anthropic (Claude ops briefings)

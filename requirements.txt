@@ -1,0 +1,20 @@
+# --- Core data / numerics ---
+polars>=1.0
+pandas>=2.0
+numpy>=1.26
+pyarrow>=14.0
+scipy>=1.11            # shrinkage covariance / HRP (strategies/cov_aware.py)
+scikit-learn>=1.3      # Ledoit-Wolf covariance
+
+# --- AI desk + validation + tracing (sponsor stack) ---
+pydantic>=2.0
+openai>=1.0            # NVIDIA NIM + Doubleword (OpenAI-compatible endpoints)
+anthropic>=0.30        # Anthropic Claude
+logfire>=0.40          # Pydantic Logfire tracing
+pydantic-ai>=0.0.13    # typed agents (live/desk_pydantic_ai.py)
+
+# --- Live execution: Windows only (MetaTrader 5 terminal API) ---
+MetaTrader5>=5.0.45 ; platform_system == "Windows"
+
+# --- Optional ---
+matplotlib>=3.7        # equity-curve PNGs

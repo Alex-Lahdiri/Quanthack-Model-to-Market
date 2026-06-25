@@ -1,0 +1,21 @@
+{
+  "metrics": {
+    "total_return": -0.03739164948885598,
+    "max_drawdown": -0.07035723182442477,
+    "sharpe": -7.845725418989573,
+    "sortino": -11.611404397948002,
+    "discipline": 100.0,
+    "trade_count": 1029,
+    "liquidated": false,
+    "final_equity": 962608.350511144,
+    "n_equity_samples": 288,
+    "sharpe_prize_eligible": true
+  },
+  "params": {
+    "strategy": "diversified_vol_target",
+    "rebalance_every": 15,
+    "cost_bps": 1.0,
+    "band_frac": 0.02,
+    "start_equity": 1000000.0
+  }
+}
