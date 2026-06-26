@@ -45,5 +45,5 @@ $env:QH_DRY=1; powershell -ExecutionPolicy Bypass -File live/run_cycle.ps1
 ## Where to look in the code
 - `live/autopilot.py` - the governed autonomous AI desk (the headline).
 - `risk_engine.py` + `tests/test_safety.py` - the caps, and the tests that prove them.
-- `live/edge_scan.py` / `live/micro_scan.py` - the live research that overturned our own momentum thesis.
+- `live/edge_scan.py` / `live/micro_scan.py` - the live research that overturned my own momentum thesis.
 - `RESEARCH_LOG.md` - the full, honest research journey (including every negative result).

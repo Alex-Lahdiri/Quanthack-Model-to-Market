@@ -2,7 +2,7 @@
 
 **Strategy in one line:** a market-neutral 8-hour-momentum book, shrinkage-MV sized, run at
 *conservative* leverage (2-3x), behind a risk engine + drawdown de-risk that make blow-ups and
-penalties near-impossible. We win by **surviving the knockout** + the **$10k Sharpe prize** + the **Tech prize**.
+penalties near-impossible. I win by **surviving the knockout** + the **$10k Sharpe prize** + the **Tech prize**.
 
 **Timeline (BST):** Jun 17 prep · Jun 18 22:00 API + reg deadline · Jun 19 08:00 pick method ·
 Jun 21 22:00 **LAUNCH** · Jun 22/23/24 22:00 round cuts · Jun 24-26 Finals · Jun 27 results.

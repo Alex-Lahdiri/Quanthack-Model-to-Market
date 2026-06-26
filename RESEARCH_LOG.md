@@ -38,7 +38,7 @@ python verify.py                # 12 independent checks on the scoring math + ri
 
 ## Onboarding the real 20GB Week-1 Parquet
 
-1. **Inspect the schema first** (we don't know the exact column names yet):
+1. **Inspect the schema first** (I don't know the exact column names yet):
    ```bash
    python run_backtest.py --data /path/to/week1.parquet --inspect
    ```
@@ -91,7 +91,7 @@ visible on a 5-minute delay - scrape it into a DataFrame with columns
   (Sharpe ~10, big returns). That validates the *plumbing*, not an edge. Real markets won't
   hand you persistent drift - expect far lower numbers and re-tune.
 - **"Trades executed" counts position adjustments**, so the figure is large; what matters for
-  the $10k Sharpe prize is simply clearing the 30-trade floor (we do, easily).
+  the $10k Sharpe prize is simply clearing the 30-trade floor (I do, easily).
 - **The margin/liquidation model is a conservative assumption** (`MAINTENANCE_MARGIN_LEVEL`
   in `config.py`). Confirm the platform's real maintenance margin and update it.
 - This is paper trading. No strategy guarantees returns; markets are not predictable.
@@ -109,7 +109,7 @@ visible on a 5-minute delay - scrape it into a DataFrame with columns
 
 The provided archive is a zip of **one Parquet per `SYMBOL_YYYY_MM_DD`** (531 files,
 ~21.8 GB uncompressed), columns: `time` (microsecond string), `sym`, `bid`, `ask`,
-plus full L2 depth ladders (ignored - we use top-of-book `bid`/`ask`).
+plus full L2 depth ladders (ignored - I use top-of-book `bid`/`ask`).
 
 **Universe (22):** AUDJPY, AUDNZD, AUDUSD, EURCHF, EURGBP, EURJPY, EURUSD, GBPUSD,
 NZDUSD, USDCAD, USDCHF, USDCNH, USDHKD, USDJPY, XAGUSD, XAUUSD (+ XAUCNH/XAUGCNH/
@@ -155,7 +155,7 @@ walk-forward, add more instruments / the full month, and re-test. New helpers:
 
 ### v2 experiment - did NOT beat the baseline (documented negative result)
 
-We encoded the research findings into `UsdNeutralMomentum` (2h+8h momentum blend,
+I encoded the research findings into `UsdNeutralMomentum` (2h+8h momentum blend,
 rolling-beta USD-factor neutralization, per-name caps, time-of-day gating) and
 walk-forwarded it head-to-head (`compare_v2.py`, `ablate.py`).
 
@@ -229,7 +229,7 @@ Deflated Sharpe Ratio (Bailey & Lopez de Prado) + Probability of Backtest Overfi
 (`overfit.py`), run over the grid of configs explored this session:
 
 - **Deflated Sharpe = 0.26** (N=16 trials), falling to 0.13 (N=50) / 0.05 (N=200). The best backtest
-  Sharpe (~4.9) is actually BELOW the expected-max under the null (~7.4) - i.e. given how many configs we
+  Sharpe (~4.9) is actually BELOW the expected-max under the null (~7.4) - i.e. given how many configs I
   tried and how variable their Sharpes are, ~4.9 is what you'd get by luck. **The absolute performance does
   not survive deflation.**
 - **PBO = 21%** - the in-sample-best config is below-median OOS ~21% of the time, so the *ranking*

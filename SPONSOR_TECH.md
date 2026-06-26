@@ -7,7 +7,7 @@ It can never size up or override the risk engine. This wins the tech prize *and*
 edge clean (no overfitting from AI signals).
 
 ## How each sponsor is used (already built - in `live/`)
-| Sponsor | Use in our system | Code |
+| Sponsor | Use in my system | Code |
 |---|---|---|
 | **Anthropic / Claude** | (1) the whole system was built agentically with Claude; (2) live ops/risk briefings + round summaries; (3) synthesis step of the news risk-gate; (4) auto-draft submission text | `ops_agent.py`, `news_risk_gate.py`, `ai_gateway.py` |
 | **NVIDIA Nemotron** | cheap, fast **bulk headline impact-tagging** (Nano model via build.nvidia.com, OpenAI-compatible) feeding the risk gate; optional offline fine-tune on the Northflank GPU | `ai_gateway.py` (nvidia route), `news_risk_gate.py` |

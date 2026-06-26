@@ -1,6 +1,6 @@
 # Per-round gross game-plan (tournament tactics)
 
-The single biggest lever you control on **placement** is gross leverage. Here's how our book
+The single biggest lever you control on **placement** is gross leverage. Here's how my book
 actually behaves - measured on shrinkage-MV, the live 10 names, the full month, with real venue
 costs **and the per-name risk caps applied** (name ≤ 30% of the book, ≤ 75% of equity).
 
@@ -58,4 +58,4 @@ python live\gross_planner.py --round 4 --rounds-total 4 --goal win --equity 1080
 
 Whatever number it gives, put it in `live\runtime.json` → `"gross"` and the next automated cycle uses it. **Start Round 1 at gross 2.**
 
-> Caveat: one month of in-sample data, thin and partly-overfit edge. Treat these as the *shape* of the trade-off (Sharpe-flat, concave in gross, no blow-up), not a promise of +14%. Live will be smaller and noisier - which is exactly why we survive first and only lean up when the tournament math demands it.
+> Caveat: one month of in-sample data, thin and partly-overfit edge. Treat these as the *shape* of the trade-off (Sharpe-flat, concave in gross, no blow-up), not a promise of +14%. Live will be smaller and noisier - which is exactly why I survive first and only lean up when the tournament math demands it.

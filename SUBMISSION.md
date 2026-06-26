@@ -4,11 +4,11 @@
 A scoring-aware, market-neutral FX/metals trading system built end-to-end for the Quanthack
 competition: a tick-data ingestion pipeline, a backtester whose risk engine makes the competition's
 penalty tiers and the liquidation red line *structurally* unreachable, a rigorously validated
-strategy, and an advisory live runtime for 24/7 paper trading. Our differentiator is **methodological
-honesty**: we treated every promising backtest as guilty until proven robust, and used Deflated Sharpe
+strategy, and an advisory live runtime for 24/7 paper trading. My differentiator is **methodological
+honesty**: I treated every promising backtest as guilty until proven robust, and used Deflated Sharpe
 and Probability of Backtest Overfitting to separate real signal from luck.
 
-## What we built
+## What I built
 - **Ingestion** (`data_loader.py`, `batch_ingest.py`): streams the 20 GB / 531-file tick archive
   (22 instruments, one Parquet per instrument-day), resamples to bars via a fast minute-bucket method,
   and caches a price panel. Checkpointed so it survives any runtime limit.
@@ -39,7 +39,7 @@ and Probability of Backtest Overfitting to separate real signal from luck.
      block-consistency (5/6 positive). Accounting for the ~50% USD factor in sizing matters.
    - *Regime gate + signal ensemble* → no improvement.
    - *Overfitting controls* → the reality check.
-5. **Overfitting analysis (the centrepiece).** Across the configs we tried: **Deflated Sharpe = 0.26**
+5. **Overfitting analysis (the centrepiece).** Across the configs I tried: **Deflated Sharpe = 0.26**
    (the best backtest Sharpe ~4.9 sits *below* the ~7.4 expected-max-under-null), and **PBO = 21%**.
    Conclusion: trust the *direction* (MV > inverse-vol, slow > fast, low turnover), not the *magnitude*.
 
@@ -49,8 +49,8 @@ and Probability of Backtest Overfitting to separate real signal from luck.
 | inverse-vol (baseline) | +7.0% | −5.9% | 3.28 | 100/100 | 3.63 |
 | shrinkage MV (leading) | +17.8% | −9.2% | 4.77 | 100/100 | 4.32 |
 
-**Caveat we put front-and-centre:** Deflated Sharpe 0.26 means these magnitudes are very likely
-inflated by selection. Live, we expect materially less. We therefore deploy at **conservative gross**
+**Caveat I put front-and-centre:** Deflated Sharpe 0.26 means these magnitudes are very likely
+inflated by selection. Live, I expect materially less. I therefore deploy at **conservative gross**
 and compete on survival + the risk-adjusted ranks (and the $10k Sharpe prize), not on a backtested
 return number.
 
@@ -64,15 +64,15 @@ bridge is rate-limited well under 500 req/s and is paper-only with dry-run defau
   data pipeline, backtester, strategy iteration, and (critically) the decision to *stop adding complexity*
   once the overfitting metrics said so. Optional Claude-powered ops agent for round summaries.
 - **Pydantic Logfire** - wired into the live runtime (`--logfire`) to trace every target-book generation
-  and risk check; the audit trail doubles as our observability story.
+  and risk check; the audit trail doubles as my observability story.
 - **Northflank** - Dockerised deployment with two cron jobs (London region) for the hourly runner and
   5-minute risk monitor.
-- **Doubleword / NVIDIA Nemotron** - evaluated for an LLM/event signal and a microstructure model; our
-  own overfitting analysis argued against adding ML on a single month of data, so we deliberately did not.
+- **Doubleword / NVIDIA Nemotron** - evaluated for an LLM/event signal and a microstructure model; my
+  own overfitting analysis argued against adding ML on a single month of data, so I deliberately did not.
   (Honest negative usage is itself a finding.)
 
 ## Data usage
-20 GB L2 tick archive (2026-05-11→06-10, 22 instruments). We use top-of-book mid for bars, the depth
+20 GB L2 tick archive (2026-05-11→06-10, 22 instruments). I use top-of-book mid for bars, the depth
 ladders to confirm microstructure was synthetic, and `mean_spread` to set realistic per-instrument costs.
 
 ## Reproducible demo

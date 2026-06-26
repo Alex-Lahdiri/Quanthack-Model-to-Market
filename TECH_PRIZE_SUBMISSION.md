@@ -7,7 +7,7 @@ Entrant: alex@ladimex.com · Account 10009 · $1,000,000 simulated · scored 70/
 
 ---
 
-## 1. Partner technology - what we used and where
+## 1. Partner technology - what I used and where
 
 Every sponsor is used for something real, in the live system (not a demo bolt-on).
 
@@ -79,7 +79,7 @@ Every sponsor is used for something real, in the live system (not a demo bolt-on
 - Cross-sectional **information-coefficient (IC) analysis** across a full lookback×horizon **surface**, with **t-stat significance tests** and an **autocorrelation study** (`live/edge_scan.py`, `live/micro_scan.py`) - run *live on the competition feed*, not just the archive.
 - **Shrinkage-covariance (Ledoit-Wolf) mean-variance** sizing (Σ⁻¹α) for genuine diversification.
 - **Overfitting controls:** Deflated Sharpe Ratio ≈ **0.26**, Probability of Backtest Overfitting ≈ **21%** (Bailey & López de Prado).
-- **Negative results we kept and rejected** - the discipline the judges should weigh most: a volatility-target overlay, a short-term **reversal** sleeve (higher raw IC but died to costs), an mv+inverse-vol **ensemble**, **HRP**, **regime gating**, and **crypto** (validation-gated - it *failed* the gate on live data, so it never traded). We document what didn't work rather than curve-fit until it did.
+- **Negative results I kept and rejected** - the discipline the judges should weigh most: a volatility-target overlay, a short-term **reversal** sleeve (higher raw IC but died to costs), an mv+inverse-vol **ensemble**, **HRP**, **regime gating**, and **crypto** (validation-gated - it *failed* the gate on live data, so it never traded). I document what didn't work rather than curve-fit until it did.
 
 ---
 
@@ -88,12 +88,12 @@ Every sponsor is used for something real, in the live system (not a demo bolt-on
 The competition opened into a **choppy, momentum-adverse regime**. Rather than hope, the system measured and adapted, on the live competition data:
 
 - **`regime_report.py`** computed live momentum **IC on the actual competition feed** → diagnosed a **zero/negative-edge chop** (IC ≈ 0, second-half IC negative).
-- **Cadence dial** - the data showed faster trading was *bleeding via whipsaw*, so we slowed the rebalance **hourly → every 4 hours** (turning a −0.6% bleed into a small gain in the live-data test).
+- **Cadence dial** - the data showed faster trading was *bleeding via whipsaw*, so I slowed the rebalance **hourly → every 4 hours** (turning a −0.6% bleed into a small gain in the live-data test).
 - **Gross dial** - cut exposure (2 → 1) when the edge was absent; the **fast risk monitor** applied the resize within minutes and confirmed it (margin level 1,500% → 3,000%).
 - **Fast risk monitor** (`fast_monitor.py`, every 3 min) - an intra-cycle circuit breaker enforcing the de-risk ladder so a shock between rebalances is handled in minutes, not at the top of the next hour.
-- **The AI desk surfaced a real risk we then fixed in code:** three independent model views flagged that gold+silver shorts were co-dominating (~35% of gross); we added a **metals-sector cap** in response.
-- **We let the data overturn our own thesis.** A live **autocorrelation + IC study** (`edge_scan.py`, `micro_scan.py`) showed momentum was the *wrong sign* in this regime - hourly returns were persistently **mean-reverting** (lag-1 autocorr ≈ −0.2, stable across sub-periods). We built and wired a **mean-reversion strategy** (`rev`) in response. Retiring our own backtest champion the moment the live data disagreed is the discipline we're proudest of.
-- **`strat_compare.py`** scores every candidate **across sub-periods** (not just the full window), so we pick what *generalises* rather than what fits - the direct antidote to the overfitting that flattered our first momentum reads.
+- **The AI desk surfaced a real risk I then fixed in code:** three independent model views flagged that gold+silver shorts were co-dominating (~35% of gross); I added a **metals-sector cap** in response.
+- **I let the data overturn my own thesis.** A live **autocorrelation + IC study** (`edge_scan.py`, `micro_scan.py`) showed momentum was the *wrong sign* in this regime - hourly returns were persistently **mean-reverting** (lag-1 autocorr ≈ −0.2, stable across sub-periods). I built and wired a **mean-reversion strategy** (`rev`) in response. Retiring my own backtest champion the moment the live data disagreed is the discipline I'm proudest of.
+- **`strat_compare.py`** scores every candidate **across sub-periods** (not just the full window), so I pick what *generalises* rather than what fits - the direct antidote to the overfitting that flattered my first momentum reads.
 
 ### Autopilot - the system that re-tunes *itself* (`live/autopilot.py`)
 The endpoint of this story: the manual adapt-loop is now **autonomous**. Each run, **NVIDIA Nemotron** (Analyst) classifies the live regime and **Anthropic Claude** (Strategist) proposes the next strategy / gross / cadence - each a **Pydantic-validated** object that *cannot* be out of bounds - then a deterministic **Governor** clamps it to competition-safe limits. It provably refuses to size up in a no-edge regime, caps an unproven (t < 2) edge, and obeys the drawdown ladder (a reckless `gross=9` proposal is clamped to 3.0; a 2.5 ask in a no-edge regime is forced to 1.0). It routes through the **multi-provider gateway** (Claude / Nemotron / Doubleword) and is **Logfire-traced** end to end. It never trades - it proposes a governed config the deterministic risk engine then applies (shadow by default; `--arm` to write it).
@@ -128,7 +128,7 @@ Under it: `mt5_feed → live_runner → desk → preflight → mt5_bridge`, sche
 
 ## 8. Honest assessment
 
-We make no claim to a large or certain alpha - the edge is thin and regime-dependent, and we say so plainly. We compete on **engineering, risk discipline, a genuine end-to-end sponsor integration, and live adaptability**: a system built to survive the knockout, contend for the Sharpe prize via a clean market-neutral book, and demonstrate a real, self-adapting, observable AI-native trading stack. The most competition-relevant thing we did wasn't a magic signal - it was **measuring the live regime and re-tuning the system from data, in real time.**
+I make no claim to a large or certain alpha - the edge is thin and regime-dependent, and I say so plainly. I compete on **engineering, risk discipline, a genuine end-to-end sponsor integration, and live adaptability**: a system built to survive the knockout, contend for the Sharpe prize via a clean market-neutral book, and demonstrate a real, self-adapting, observable AI-native trading stack. The most competition-relevant thing I did wasn't a magic signal - it was **measuring the live regime and re-tuning the system from data, in real time.**
 
 ---
 

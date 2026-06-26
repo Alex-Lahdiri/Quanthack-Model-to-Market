@@ -1,10 +1,10 @@
 # Platform notes (from Discord Q&A, pre-official-rules) - confirmed facts + plan changes
 
-## The two interfaces (decides our integration)
+## The two interfaces (decides my integration)
 - **MT5 (with API for automation)** and the **Syphonix AI Agent** (chat UI, "decision cards" you approve).
 - **There is NO standalone Syphonix API** (they *may* add one later). The AI agents are chat-only - you
-  cannot drive our quant book through them programmatically.
-- => **Our custom shrinkage-MV book runs via the MT5 API.** (This matches the original "MT5 + custom" choice.)
+  cannot drive my quant book through them programmatically.
+- => **My custom shrinkage-MV book runs via the MT5 API.** (This matches the original "MT5 + custom" choice.)
 
 ## ⚠ Deployment architecture change (important)
 - The MT5 Python integration **requires a local Windows MT5 terminal - not supported on Linux**, so it
@@ -18,19 +18,19 @@
 - Real market data is the input; orders are simulated (no live-market impact). BUT there's **internal
   order-book matching - you can match against other participants**. Slippage, market impact, partial fills
   simulated. Maker + taker both supported. Everyone sees the same bid/ask. **No Syphonix-side rate limit**
-  (limits, if any, come from the MT5 layer - our bridge's pacing is still prudent).
+  (limits, if any, come from the MT5 layer - my bridge's pacing is still prudent).
 
 ## Universe
 - FX + precious metals + **crypto (BTCUSD, ETHUSD, SOLUSD, XRPUSD, HBARUSD)**. No stocks/indices/bonds. 30+ total; full list after login.
-- Backtest archive = 1 month, tick-level, 5-level depth - **but NO crypto, and FX depth is synthetic** (our finding).
+- Backtest archive = 1 month, tick-level, 5-level depth - **but NO crypto, and FX depth is synthetic** (my finding).
   They're releasing an **updated data version** (adding L2 to MT5 data). **Grab the update when out** - it may fix the
-  synthetic depth and revive the microstructure idea. For crypto, use public data if you choose to trade it (we have none → unvalidated).
+  synthetic depth and revive the microstructure idea. For crypto, use public data if you choose to trade it (I have none → unvalidated).
 
 ## Scoring (CONFIRM against official rules released Jun 15)
 - Discord says **"primary ranking metric is PnL"** + risk controls (leverage 30:1, margin, concentration, drawdown,
   rule breaches) to stop gambling. **PnL CARRIES OVER across rounds** (not reset).
-- Our console-derived **70/15/10/5** weights are in `config.py` - **verify them against the official rules** and I'll
-  update the weights/thresholds. If scoring is more PnL-weighted than assumed, we may nudge gross up a touch - but the
+- My console-derived **70/15/10/5** weights are in `config.py` - **verify them against the official rules** and I'll
+  update the weights/thresholds. If scoring is more PnL-weighted than assumed, I may nudge gross up a touch - but the
   knockout-by-equity structure still rewards survival, so conservative-but-positive stays right.
 - External data (news/prediction markets) **is allowed**.
 
@@ -50,13 +50,13 @@
 5. Whether a **Syphonix API** appears; whether **updated historical data** (with real depth / crypto) is released.
 
 ## OFFICIAL RULES (released Jun 15) - reconciled
-- **Scoring 70/15/10/5 is EXACT** (§11). Our `config.py` already matched. No change needed.
+- **Scoring 70/15/10/5 is EXACT** (§11). My `config.py` already matched. No change needed.
 - **Initial funds $1,000,000, max leverage 30x** (§2) - confirmed (the $100M in the demo was a sandbox).
-- **Risk-discipline tiers match exactly** (§13): margin >90%/95%/98%, leverage >28x/29x/~30x, single-instrument >90%, net-directional >95%. Our safe caps sit below all of them.
+- **Risk-discipline tiers match exactly** (§13): margin >90%/95%/98%, leverage >28x/29x/~30x, single-instrument >90%, net-directional >95%. My safe caps sit below all of them.
 - **Red lines** (§14): forced liquidation = elimination; bug/quote/latency exploit, API abuse (safe harbor ≤500/s), multi-account, collusion = DQ. Aligned.
 - **FIX APPLIED:** competition **Sharpe is NON-annualized** = Mean/Std of 15-min equity returns (§12.5/§17). Updated `metrics.py` to report it (e.g. recommended config = 0.0101; annualized ~1.89). **Ranks are unchanged**, so every relative conclusion still holds. Also added the <8-obs Sharpe-rank cap and the exact rank formula 100*(N-Rank)/(N-1).
 - **Equity carries across rounds** (Return measured vs the fixed $1M); **Risk Discipline resets each round**. Knockout by Final Score at each 22:00 cutoff; Top 100 -> Finals.
-- **$10k Best Sharpe** (§17): Finals + Top 50 + no red-line + >=30 trades. We clear the trade count easily.
+- **$10k Best Sharpe** (§17): Finals + Top 50 + no red-line + >=30 trades. I clear the trade count easily.
 - **Timeline:** method selection **Jun 19 08:00**; launch **Jun 21 22:00**; Round cuts 22/23/24 Jun 22:00; Finals to 26 Jun 22:00; results 27 Jun.
 
-**Bottom line:** the official rules validate the entire design we built. Only correction was the Sharpe units.
+**Bottom line:** the official rules validate the entire design I built. Only correction was the Sharpe units.

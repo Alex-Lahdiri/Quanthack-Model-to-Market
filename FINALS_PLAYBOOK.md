@@ -3,7 +3,7 @@
 **Status:** Round 3 done, system paused. One reference to execute the finals fast.
 **Honest aim:** win the **Tech prize** + a **strong composite placement** (smooth book + layered
 protection), with **upside optionality** - Autopilot presses if the finals trend and the scalpers
-get purged in the audit. We do *not* try to out-scalp the BTC HFT bot for the raw-return crown.
+get purged in the audit. I do *not* try to out-scalp the BTC HFT bot for the raw-return crown.
 
 ---
 
