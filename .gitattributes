@@ -1,0 +1,5 @@
+# Keep GitHub's language bar about the source code.
+# The HTML files are a dashboard and exported reports, and docs/ is write-ups.
+*.html      linguist-detectable=false
+results/**  linguist-generated
+docs/**     linguist-documentation
