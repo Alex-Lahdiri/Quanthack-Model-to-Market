@@ -2,8 +2,12 @@
 
 > A complete quant stack - research → strategy → a multi-layer risk engine → native MetaTrader 5 execution → an **autonomous multi-agent AI desk** (NVIDIA Nemotron + Anthropic Claude, Pydantic-validated, Logfire-traced, multi-provider via Doubleword) → cloud deploy (Northflank) - that, **live during the competition, tested its own edges, overturned its own thesis on the data, and re-tuned its strategy, leverage, and risk autonomously.**
 
-Built for the Syphonix × AI Engine **"Model to Market"** competition.
+Built for the Syphonix × AI Engine **"Model to Market"** competition, June 2026.
 $1,000,000 simulated · scored **70% Return / 15% Drawdown / 10% Sharpe / 5% Risk Discipline**.
+
+**Result:** 31st of 400+, and selected for the live in-person finals. Everything here ran on a simulated account trading live prices through MetaTrader 5. No real money was at risk.
+
+**Case study:** [alexlahdiri.com/#m2m](https://alexlahdiri.com/#m2m) has the short version, with an interactive copy of the risk governor. The full dated research log is in [`docs/RESEARCH_LOG.md`](docs/RESEARCH_LOG.md).
 
 **Honest thesis:** I make no claim to a magic alpha - the edge is thin and regime-dependent, and I *prove* that with data rather than hide it. I compete on **engineering, genuine end-to-end sponsor integration, live adaptability, and risk discipline.**
 
@@ -80,7 +84,7 @@ flowchart TD
 - **Overfitting controls:** Deflated Sharpe ≈ 0.26, Probability of Backtest Overfitting ≈ 21% (Bailey & López de Prado) → *trust the direction of findings, not the magnitude.*
 - **Real venue cost calibration** - and I *discovered live* that true spreads (2–6 bps off-hours) dwarf the M1-derived estimate, which reshaped my cadence toward low turnover.
 - **Negative results I kept and published:** momentum (wrong sign live), a reversal sleeve that died to cost, HRP, an ensemble, an order-book/microstructure dead-end, crypto (failed a live validation gate), and FX/BTC scalping (probed at zero risk, declined).
-- **Full dated research journey** - every experiment, every negative result, the overfit math, the shrinkage-MV win: **[`RESEARCH_LOG.md`](RESEARCH_LOG.md)**.
+- **Full dated research journey** - every experiment, every negative result, the overfit math, the shrinkage-MV win: **[`docs/RESEARCH_LOG.md`](docs/RESEARCH_LOG.md)**.
 
 ---
 
@@ -92,7 +96,7 @@ The competition opened choppy and momentum-adverse. The system **measured and ad
 - **Autopilot** closes the loop autonomously - and the **governor** guarantees the AI can only ever *reduce* risk or stay within safe bounds.
 - The AI desk surfaced a real concentration risk (co-dominant metals shorts), which I then fixed in code with a **metals-sector cap**.
 
-Full write-up, demo script, and sponsor detail: **[`TECH_PRIZE_SUBMISSION.md`](TECH_PRIZE_SUBMISSION.md)**.
+Full write-up, demo script, and sponsor detail: **[`docs/TECH_PRIZE_SUBMISSION.md`](docs/TECH_PRIZE_SUBMISSION.md)**.
 
 ---
 
@@ -119,6 +123,13 @@ powershell -ExecutionPolicy Bypass -File live/run_cycle.ps1          # full cycl
 ```
 Everything is **dry-run by default** and requires explicit confirmation to send (paper/contest account only).
 
+The live modules need Windows and a MetaTrader 5 terminal. The safety tests run anywhere:
+
+```bash
+pip install pandas numpy scipy scikit-learn pyarrow pydantic pytest
+pytest tests/ -q        # governor, profit-lock and risk caps: 6 tests
+```
+
 ---
 
 ## Repo map
@@ -132,7 +143,8 @@ Everything is **dry-run by default** and requires explicit confirmation to send 
 | Live research | `live/edge_scan.py`, `live/micro_scan.py`, `live/strat_compare.py`, `live/crypto_scan.py`, `live/scalp.py`, `live/regime_report.py` |
 | Cloud / ops | `live/server.py`, `live/Dockerfile`, `live/northflank.json`, `live/run_cycle.ps1`, `setup_vps.ps1` |
 | Tests | `tests/test_safety.py` - runnable proofs of the governor / profit-lock / risk caps |
-| Docs | `TECH_PRIZE_SUBMISSION.md`, `NVIDIA.md`, `DEMO.md`, `RESEARCH_LOG.md`, `FINALS_PLAYBOOK.md`, `VPS_SETUP.md` |
+| Research scripts | `research.py`, `walkforward.py`, `validation_rolling.py`, `ablate.py`, `tune_*.py`, `compare_*.py`; reports in `results/` |
+| Docs | [`docs/`](docs/): [`RESEARCH_LOG.md`](docs/RESEARCH_LOG.md), [`TECH_PRIZE_SUBMISSION.md`](docs/TECH_PRIZE_SUBMISSION.md), [`NVIDIA.md`](docs/NVIDIA.md), [`DEMO.md`](docs/DEMO.md), [`FINALS_PLAYBOOK.md`](docs/FINALS_PLAYBOOK.md), [`VPS_SETUP.md`](docs/VPS_SETUP.md), plus the competition planning notes, pitch deck and reports |
 
 ---
 
